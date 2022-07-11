@@ -1,0 +1,52 @@
+server:
+  port: 8000
+  servlet:
+    context-path: /mystu
+spring:
+  profiles:
+    active: test
+  cache:
+    type: redis
+    redis:
+      time-to-live: 20000
+      cache-null-values: false
+  datasource:
+    url: @jdbc.connection.url@
+    username: @jdbc.connection.user@
+    password: @jdbc.connection.password@
+    driver-class-name: @jdbc.driver.class@
+    hikari:
+      maximum-pool-size: 50
+      minimum-idle: 10
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password:
+      lettuce:
+        pool:
+          max-idle: 500
+          max-wait: 100
+          max-active: 1000
+          min-idle: 100
+      timeout: 1000
+mybatis-plus:
+  #配置MyBatis映射文件
+  mapper-locations: classpath:/mybatis/mappers/*.xml
+  #配置MyBatis返回类型别名
+  type-aliases-package: com.max.back.demo.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: true
+    jdbc-type-for-null: 'null'
+    default-statement-timeout: 3000
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      update-strategy: ignored
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql
+logging:
+  config: classpath:logback-spring.xml
